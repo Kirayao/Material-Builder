@@ -1,0 +1,4 @@
+[Project]
+Name=MaterialBuilder
+Manager=KDevCMakeManager
+VersionControl=kdevgit
