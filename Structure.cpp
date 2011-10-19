@@ -25,3 +25,13 @@ bool Structure::operator==(const Structure& other) const
 ///TODO: return ...;
 }
 
+int Structure::addBall(int px, int py, int pz, int radius)
+{
+
+}
+
+int Structure::addCube(int px, int py, int pz, int radius)
+{
+
+}
+
