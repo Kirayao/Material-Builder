@@ -7,13 +7,19 @@ Structure::Structure()
 
 Structure::Structure(const Structure& other)
 {
-
+  this -> substrate = other.retSubstrate();
 }
 
 Structure::~Structure()
 {
-
+  free_data(x,y);
 }
+
+Material Structure::retSubstrate()
+{
+  return this->substrate;
+}
+
 
 Structure& Structure::operator=(const Structure& other)
 {
