@@ -20,18 +20,13 @@ Structure& Structure::operator=(const Structure& other)
 return *this;
 }
 
-bool Structure::operator==(const Structure& other) const
-{
-///TODO: return ...;
-}
-
 int Structure::addBall(int px, int py, int pz, int radius)
 {
-  for (int i = (x-radius); i <= (x+radius); i++)
+  for (int i = (x-radius)*accuracy; i <= (x+radius)*accuracy; i++)
   {
-    for(int j = (y-radius); j <= (y+radius); j++)
+    for(int j = (y-radius)*accuracy; j <= (y+radius)*accuracy; j++)
     {
-      for(int k = (z-radius); k <= (z+radius); k++)
+      for(int k = (z-radius)*accuracy; k <= (z+radius)*accuracy; k++)
       {
 	//Ball function
 	if ( pow(i-x,2)+pow(j-y,2)+pow(k-z,2) <= pow(radius, 2) )
@@ -44,11 +39,11 @@ int Structure::addBall(int px, int py, int pz, int radius)
 
 int Structure::addCube(int px, int py, int pz, int radius)
 {
-  for (int i = (x-radius); i <= (x+radius); i++)
+  for (int i = (x-radius)*accuracy; i <= (x+radius)*accuracy; i++)
   {
-    for(int j = (y-radius); j <= (y+radius); j++)
+    for(int j = (y-radius)*accuracy; j <= (y+radius); j++)
     {
-      for(int k = (z-radius); k <= (z+radius); k++)
+      for(int k = (z-radius)*accuracy; k <= (z+radius)*accuracy; k++)
       {
 	substrate[i][j][k].permitivity = 11.7;
       }
