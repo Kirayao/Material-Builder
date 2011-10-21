@@ -52,3 +52,16 @@ int Structure::addCube(int px, int py, int pz, int radius)
     return 0;
 }
 
+void Structure::free_data(int xlen, int ylen)
+{
+
+  for (int i=0; i < xlen; ++i) {
+    if (substrate[i] != NULL) {
+      for (int j=0; j < ylen; ++j)
+	free(substrate[i][j]);
+      free(substrate[i]);
+
+    }
+  }
+      free(substrate);
+}
