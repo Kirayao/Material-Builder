@@ -28,6 +28,8 @@ public:
   int addCube(int px,int py,int pz,int radius);
   int addBall(int px,int py, int pz, int radius);
 
+  Material retSubstrate();
+
 private:
 
   void free_data( int xlen, int ylen);
