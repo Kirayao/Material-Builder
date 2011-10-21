@@ -29,6 +29,9 @@ public:
   int addBall(int px,int py, int pz, int radius);
 
 private:
+
+  void free_data( int xlen, int ylen);
+
   Material ***substrate;
 
   int x,y,z;
