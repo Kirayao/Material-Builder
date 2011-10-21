@@ -35,7 +35,7 @@ int Structure::addBall(int px, int py, int pz, int radius)
       {
 	//Ball function
 	if ( pow(i-x,2)+pow(j-y,2)+pow(k-z,2) <= pow(radius, 2) )
-	  Array[i][j][k].permitivity = 11.7;
+	  substrate[i][j][k].permitivity = 11.7;
       }
     }
   }
@@ -50,7 +50,7 @@ int Structure::addCube(int px, int py, int pz, int radius)
     {
       for(int k = (z-radius); k <= (z+radius); k++)
       {
-	Array[i][j][k].permitivity = 11.7;
+	substrate[i][j][k].permitivity = 11.7;
       }
     }
   }
