@@ -24,7 +24,6 @@ public:
   Structure(const Structure& other);
   ~Structure();
   Structure& operator=(const Structure& other);
-  bool operator==(const Structure& other) const;
 
   int addCube(int px,int py,int pz,int radius);
   int addBall(int px,int py, int pz, int radius);
