@@ -1,12 +1,10 @@
 #include "Structure.h"
 
-Structure::Structure()
-{
 
-}
-
-Structure::Structure(int x = 50, int y = 50, int z = 10)
+Structure::Structure(int x = 50, int y = 50, int z = 10, int accuracy)
 {
+  x*=accuracy; y*=accuracy; z*=accuracy;
+
   if ( ( substrate =(Material***) malloc( x * sizeof(Material) ) ) == NULL )
   {
     perror("malloc 1");
@@ -65,6 +63,20 @@ Structure::~Structure()
 Material Structure::retSubstrate()
 {
   return this->substrate;
+}
+
+void Structure::printSubstrate()
+{
+  for (int i=0; i<x; i++)
+  {
+    for ( int j=0; j<y; j++)
+    {
+      for (int k=0; k<z;k++)
+      {
+	printf("%f %f %f %f", i/accuracy , j/accuracy , k/accuracy , substrate[i][j][k].permitivity );
+      }
+    }
+  }
 }
 
 
