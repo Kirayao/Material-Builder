@@ -39,7 +39,16 @@ Structure::Structure(int x = 50, int y = 50, int z = 10)
 			  }
 			}
 		      }
-
+  for (int i = 0; i < x; i++)
+  {
+    for(int j = 0; j < y; j++)
+    {
+      for(int k = 0; k < z; k++)
+      {
+	 substrate[i][j][k].permitivity = 3.9;
+      }
+    }
+  }
 }
 
 
