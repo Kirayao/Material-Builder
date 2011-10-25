@@ -20,9 +20,8 @@ class Structure
 {
 
 public:
-  Structure();
-  Structure(const Structure& other);
-  Structure(int x = 50, int y = 50, int z = 10);
+
+  Structure(int x = 50, int y = 50, int z = 10, int accuracy = 100);
 
   ~Structure();
   Structure& operator=(const Structure& other);
@@ -31,6 +30,7 @@ public:
   int addBall(int px,int py, int pz, int radius);
 
   Material retSubstrate();
+  void printSubstrate();
 
 private:
 
