@@ -22,6 +22,8 @@ class Structure
 public:
   Structure();
   Structure(const Structure& other);
+  Structure(int x = 50, int y = 50, int z = 10);
+
   ~Structure();
   Structure& operator=(const Structure& other);
 
