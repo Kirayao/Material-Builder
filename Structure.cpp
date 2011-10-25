@@ -5,6 +5,44 @@ Structure::Structure()
 
 }
 
+Structure::Structure(int x = 50, int y = 50, int z = 10)
+{
+  if ( ( substrate =(Material***) malloc( x * sizeof(Material) ) ) == NULL )
+  {
+    perror("malloc 1");
+    return 1;
+  }
+
+        for (int i=0; i < x  ; ++i)
+	  substrate[i] = NULL;
+
+	for (int i=0; i < x  ; ++i)
+	  if ((substrate[i] = (Material**) malloc(y  * sizeof *substrate[i]) ) == NULL)
+	  {
+	    perror("malloc 2");
+	    	  free_data(substrate, x, y);
+		  return 1;
+	  }
+
+	  	    for (int i=0; i < x  ; ++i)
+		      for (int j=0; j < y  ; ++j)
+			substrate[i][j] = NULL;
+
+		      for (int i=0; i < x  ; ++i)
+		      {
+			for (int j=0; j < y  ; ++j)
+			{
+			  if ((substrate [i][j] = (Material*) malloc(z * sizeof * substrate [i][j])) == NULL) {
+			    perror("malloc 3");
+			    		    free_data(Array, x, y);
+					    return 1;
+			  }
+			}
+		      }
+
+}
+
+
 Structure::Structure(const Structure& other)
 {
   this -> substrate = other.retSubstrate();
@@ -23,7 +61,7 @@ Material Structure::retSubstrate()
 
 Structure& Structure::operator=(const Structure& other)
 {
-return *this;
+  return *this;
 }
 
 int Structure::addBall(int px, int py, int pz, int radius)
