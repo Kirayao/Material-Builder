@@ -29,7 +29,7 @@ public:
   int addCube(int px,int py,int pz,int radius);
   int addBall(int px,int py, int pz, int radius);
 
-  Material retSubstrate();
+  Material retSubstrate(int px, int py, int pz);
   void printSubstrate();
 
 private:
