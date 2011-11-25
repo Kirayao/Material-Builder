@@ -1,90 +1,41 @@
 #include "Structure.h"
+#include <fstream>
 
-Structure::Structure()
-{
-  accuracy = 100;
-  x= 50 * accuracy; y= 50 * accuracy; z= 10 * accuracy;
+using namespace std;
 
-  if ( ( substrate =(Material***) malloc( x * sizeof(Material) ) ) == NULL )
-  {
-    perror("malloc 1");
-    return 1;
-  }
-
-          for (int i=0; i < x  ; ++i)
-	    substrate[i] = NULL;
-
-	  for (int i=0; i < x  ; ++i)
-	    if ((substrate[i] = (Material**) malloc(y  * sizeof *substrate[i]) ) == NULL)
-	    {
-	      perror("malloc 2");
-	      	    	  free_data(substrate, x, y);
-			  return 1;
-	    }
-
-	    	  	    for (int i=0; i < x  ; ++i)
-			      for (int j=0; j < y  ; ++j)
-				substrate[i][j] = NULL;
-
-			      for (int i=0; i < x  ; ++i)
-			      {
-				for (int j=0; j < y  ; ++j)
-				{
-				  if ((substrate [i][j] = (Material*) malloc(z * sizeof * substrate [i][j])) == NULL) {
-				    perror("malloc 3");
-				    			    		    free_data(Array, x, y);
-									    return 1;
-				  }
-				}
-			      }
-			        for (int i = 0; i < x; i++)
-				{
-				  for(int j = 0; j < y; j++)
-				  {
-				    for(int k = 0; k < z; k++)
-				    {
-				      substrate[i][j][k].permitivity = 3.9;
-				    }
-				  }
-				}
-}
-
-Structure::Structure(int x = 50, int y = 50, int z = 10, int accuracy = 100)
+Structure::Structure(int xlen = 10, int ylen = 10, int zlen = 10, int accu = 100): x(xlen), y(ylen), z(zlen), accuracy(accu)
 {
   x*=accuracy; y*=accuracy; z*=accuracy;
 
   if ( ( substrate =(Material***) malloc( x * sizeof(Material) ) ) == NULL )
   {
     perror("malloc 1");
-    return 1;
   }
-
-        for (int i=0; i < x  ; ++i)
-	  substrate[i] = NULL;
-
-	for (int i=0; i < x  ; ++i)
-	  if ((substrate[i] = (Material**) malloc(y  * sizeof *substrate[i]) ) == NULL)
-	  {
-	    perror("malloc 2");
-	    	  free_data(substrate, x, y);
-		  return 1;
+  for (int i=0; i < x  ; ++i)
+    substrate[i] = NULL;
+    for (int i=0; i < x  ; ++i)
+    {
+      if ((substrate[i] = (Material**) malloc(y  * sizeof *substrate[i]) ) == NULL)
+      {
+	perror("malloc 2");
+	  free_data(x, y);
+      }
+    }
+  for (int i=0; i < x  ; ++i)
+    {
+    for (int j=0; j < y  ; ++j)
+      substrate[i][j] = NULL;
+      for (int i=0; i < x  ; ++i)
+      {
+	for (int j=0; j < y  ; ++j)
+	{
+	  if ((substrate [i][j] = (Material*) malloc(z * sizeof * substrate [i][j])) == NULL) {
+	    perror("malloc 3");
+	    free_data( x, y);
 	  }
-
-	  	    for (int i=0; i < x  ; ++i)
-		      for (int j=0; j < y  ; ++j)
-			substrate[i][j] = NULL;
-
-		      for (int i=0; i < x  ; ++i)
-		      {
-			for (int j=0; j < y  ; ++j)
-			{
-			  if ((substrate [i][j] = (Material*) malloc(z * sizeof * substrate [i][j])) == NULL) {
-			    perror("malloc 3");
-			    		    free_data(Array, x, y);
-					    return 1;
-			  }
-			}
-		      }
+	}
+      }
+  }
   for (int i = 0; i < x; i++)
   {
     for(int j = 0; j < y; j++)
@@ -97,20 +48,20 @@ Structure::Structure(int x = 50, int y = 50, int z = 10, int accuracy = 100)
   }
 }
 
-
-Structure::Structure(const Structure& other)
-{
-  this -> substrate = other.retSubstrate();
-}
-
 Structure::~Structure()
 {
   free_data(x,y);
 }
 
+
 Material Structure::retSubstrate(int px, int py, int pz)
 {
   return this->substrate[px][py][pz];
+}
+
+Material*** Structure::retSubstrate()
+{
+  return this->substrate;
 }
 
 void Structure::printSubstrate()
@@ -121,11 +72,30 @@ void Structure::printSubstrate()
     {
       for (int k=0; k<z;k++)
       {
-	printf("%f %f %f %f", double(i)/accuracy , double(j)/accuracy , double(k)/accuracy , substrate[i][j][k].permitivity );
+	printf("%f %f %f %f\n", double(i)/accuracy , double(j)/accuracy , double(k)/accuracy , substrate[i][j][k].permitivity );
       }
     }
   }
 }
+
+void Structure::printSubstratetoFile(char*  path)
+{
+  fstream output;
+  output.open(path, fstream::out | fstream::trunc);
+  
+  for (int i=0; i<x; i++)
+  {
+    for ( int j=0; j<y; j++)
+    {
+      for (int k=0; k<z;k++)
+      {
+	output << " " <<  double(i)/accuracy << " " <<  double(j)/accuracy << " " <<  double(k)/accuracy << " " << substrate[i][j][k].permitivity << endl;
+      }
+    }
+  }
+  output.close();
+}
+
 
 
 Structure& Structure::operator=(const Structure& other)
@@ -142,7 +112,7 @@ int Structure::addBall(int px, int py, int pz, int radius)
       for(int k = (pz-radius)*accuracy; k <= (pz+radius)*accuracy; k++)
       {
 	//Ball function
-	if ( pow(i-x,2)+pow(j-y,2)+pow(k-z,2) <= pow(radius, 2) )
+	if ( pow(i-px,2)+pow(j-py,2)+pow(k-pz,2) <= pow(radius, 2) )
 	  substrate[i][j][k].permitivity = 11.7;
       }
     }
