@@ -21,7 +21,7 @@ class Structure
 
 public:
 
-  Structure(int x = 50, int y = 50, int z = 10, int accuracy = 100);
+  Structure(int xlen, int ylen, int zlen, int accu);
 
   ~Structure();
   Structure& operator=(const Structure& other);
@@ -29,7 +29,10 @@ public:
   int addCube(int px,int py,int pz,int radius);
   int addBall(int px,int py, int pz, int radius);
 
-  Material retSubstrate(int px, int py, int pz);
+  Material*** retSubstrate();
+  Material retSubstrate(int, int, int);
+  
+  void printSubstratetoFile(char* );
   void printSubstrate();
 
 private:
