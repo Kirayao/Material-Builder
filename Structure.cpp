@@ -1,5 +1,6 @@
 #include "Structure.h"
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -7,6 +8,8 @@ Structure::Structure(int xlen = 10, int ylen = 10, int zlen = 10, int accu = 100
 {
   x*=accuracy; y*=accuracy; z*=accuracy;
 
+  cout << z << endl;
+  
   if ( ( substrate =(Material***) malloc( x * sizeof(Material) ) ) == NULL )
   {
     perror("malloc 1");
@@ -89,6 +92,7 @@ void Structure::printSubstratetoFile(char*  path)
     {
       for (int k=0; k<z;k++)
       {
+	if (substrate[i][j][k].permitivity != 3.9 )
 	output << " " <<  double(i)/accuracy << " " <<  double(j)/accuracy << " " <<  double(k)/accuracy << " " << substrate[i][j][k].permitivity << endl;
       }
     }
@@ -112,7 +116,7 @@ int Structure::addBall(int px, int py, int pz, int radius)
       for(int k = (pz-radius)*accuracy; k <= (pz+radius)*accuracy; k++)
       {
 	//Ball function
-	if ( pow(i-px,2)+pow(j-py,2)+pow(k-pz,2) <= pow(radius, 2) )
+	if ( pow(i-px*accuracy,2)+pow(j-py*accuracy,2)+pow(k-pz*accuracy,2) <= pow(radius*accuracy, 2) )
 	  substrate[i][j][k].permitivity = 11.7;
       }
     }
@@ -124,7 +128,7 @@ int Structure::addCube(int px, int py, int pz, int radius)
 {
   for (int i = (px-radius)*accuracy; i <= (px+radius)*accuracy; i++)
   {
-    for(int j = (py-radius)*accuracy; j <= (py+radius); j++)
+    for(int j = (py-radius)*accuracy; j <= (py+radius)*accuracy; j++)
     {
       for(int k = (pz-radius)*accuracy; k <= (pz+radius)*accuracy; k++)
       {
